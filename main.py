@@ -7,6 +7,7 @@ from light import Light
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
+from map_editor import MapEditor
 
 
 class GraphicsEngine:
@@ -42,6 +43,9 @@ class GraphicsEngine:
         self.scene = Scene(self)
         # renderer
         self.scene_renderer = SceneRenderer(self)
+        # map editor
+        self.map_editor = MapEditor()
+        self.map_editor.show()
 
     def check_events(self):
         for event in pg.event.get():
@@ -50,6 +54,8 @@ class GraphicsEngine:
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
+            elif event.type == pg.KEYDOWN and event.key == pg.K_F1:
+                self.map_editor.show()
 
     def render(self):
         # clear framebuffer
@@ -74,33 +80,3 @@ class GraphicsEngine:
 if __name__ == '__main__':
     app = GraphicsEngine()
     app.run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

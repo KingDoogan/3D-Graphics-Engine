@@ -1,11 +1,14 @@
 from model import *
 import glm
+from level_editor import LevelEditor
+from map_editor import MapEditor
 
 
 class Scene:
     def __init__(self, app):
         self.app = app
         self.objects = []
+        self.level_editor = LevelEditor()
         self.load()
         # skybox
         self.skybox = AdvancedSkyBox(app)
@@ -16,6 +19,14 @@ class Scene:
     def load(self):
         app = self.app
         add = self.add_object
+
+        # Load level from .map file
+        self.level_editor.load_map('/path/to/your/map/file.map')
+        for position, asset_name in self.level_editor.grid.items():
+            if asset_name == 'Cube':
+                add(Cube(app, pos=position))
+            elif asset_name == 'Cat':
+                add(Cat(app, pos=position))
 
         # floor
         n, s = 20, 2
